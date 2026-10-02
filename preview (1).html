@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trust Axis Policy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #0b1f3a;
+            color: white;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        .hero {
+            background: white;
+            padding: 60px 8%;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            color: #0b1f3a;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: #666;
+        }
+
+        .container {
+            width: 84%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #0b1f3a;
+            font-size: 30px;
+        }
+
+        .policies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            color: #0b1f3a;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .policy-details {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .policy-details h2 {
+            color: #0b1f3a;
+            margin-bottom: 15px;
+        }
+
+        .policy-details h3 {
+            margin-top: 22px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        footer {
+            background: #0b1f3a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Trust Axis Policy</h1>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#policies">Policies</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+
+<section class="hero" id="home">
+    <h2>Trust Axis Policy</h2>
+
+    <p>
+        Simple, transparent and easy-to-understand policies designed
+        to protect customers and provide clarity across different services.
+    </p>
+</section>
+
+
+<section class="container" id="policies">
+
+    <div class="section-title">
+        <h2>Our Policies</h2>
+        <p>Explore policies related to different service categories.</p>
+    </div>
+
+    <div class="policies">
+
+        <div class="card">
+            <div class="icon">🚗</div>
+            <h3>Car Policy</h3>
+            <p>
+                Guidelines related to vehicle ownership, insurance,
+                documentation, claims and responsible vehicle usage.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="icon">🎓</div>
+            <h3>Education Policy</h3>
+            <p>
+                Policies covering education services, student support,
+                admissions, fees, learning resources and transparency.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="icon">🏥</div>
+            <h3>Health Policy</h3>
+            <p>
+                General guidelines for healthcare-related services,
+                customer privacy, records and service responsibilities.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="icon">💰</div>
+            <h3>Finance Policy</h3>
+            <p>
+                Guidelines covering financial services, transactions,
+                payments, security and responsible financial practices.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="icon">🏠</div>
+            <h3>Property Policy</h3>
+            <p>
+                General policies related to property services,
+                documentation, transactions and customer responsibilities.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <div class="icon">🔐</div>
+            <h3>Privacy Policy</h3>
+            <p>
+                Information about how customer information may be
+                collected, used, stored and protected.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="policy-details">
+
+        <h2>General Policy</h2>
+
+        <p>
+            Trust Axis Policy aims to provide clear and transparent
+            information to users regarding different services.
+        </p>
+
+        <h3>1. Transparency</h3>
+        <p>
+            All services should provide clear information about
+            applicable terms, charges, requirements and responsibilities.
+        </p>
+
+        <h3>2. Customer Responsibility</h3>
+        <p>
+            Customers are responsible for providing accurate information
+            and complying with applicable terms and requirements.
+        </p>
+
+        <h3>3. Data Protection</h3>
+        <p>
+            Personal information should be handled responsibly and
+            protected against unauthorized access.
+        </p>
+
+        <h3>4. Policy Updates</h3>
+        <p>
+            Trust Axis Policy may update these policies when required.
+            Users should review the latest version periodically.
+        </p>
+
+        <h3>5. Contact & Support</h3>
+        <p>
+            For questions regarding any policy, users can contact the
+            Trust Axis Policy support team.
+        </p>
+
+    </div>
+
+</section>
+
+
+<footer id="contact">
+    <h3>Trust Axis Policy</h3>
+    <p>Transparency • Security • Responsibility</p>
+    <p>© 2026 Trust Axis Policy. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
