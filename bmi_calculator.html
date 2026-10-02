@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    color:#172033;padding:20px;
+  }
+  .card{
+    width:min(460px,100%);
+    background:#fff;border-radius:24px;padding:30px;
+    box-shadow:0 20px 60px rgba(30,41,59,.14);
+  }
+  h1{font-size:32px;margin-bottom:8px}
+  .sub{color:#64748b;margin-bottom:25px}
+  .tabs{display:flex;background:#f1f5f9;border-radius:12px;padding:4px;margin-bottom:22px}
+  .tab{flex:1;border:0;padding:10px;border-radius:9px;background:transparent;cursor:pointer;font-weight:600;color:#64748b}
+  .tab.active{background:#fff;color:#4f46e5;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  label{display:block;font-weight:600;margin:15px 0 7px}
+  input{
+    width:100%;padding:14px 15px;border:1px solid #dbe2ea;border-radius:12px;
+    font-size:16px;outline:none;transition:.2s;
+  }
+  input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .unit{color:#64748b;font-size:13px;margin-top:5px}
+  button.calculate{
+    width:100%;margin-top:23px;padding:15px;border:0;border-radius:13px;
+    background:#4f46e5;color:white;font-size:17px;font-weight:700;cursor:pointer;
+    transition:.2s;
+  }
+  button.calculate:hover{background:#4338ca;transform:translateY(-1px)}
+  .result{margin-top:24px;padding:22px;border-radius:18px;background:#f8fafc;text-align:center;display:none}
+  .result.show{display:block;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+  .bmi{font-size:48px;font-weight:800;color:#4f46e5}
+  .status{font-size:20px;font-weight:700;margin:3px 0 15px}
+  .bar{height:10px;background:linear-gradient(90deg,#60a5fa 0 25%,#34d399 25% 50%,#fbbf24 50% 75%,#f87171 75%);border-radius:99px;position:relative}
+  .marker{position:absolute;top:50%;width:17px;height:17px;border-radius:50%;background:#172033;border:3px solid white;box-shadow:0 1px 5px #64748b;transform:translate(-50%,-50%);left:0}
+  .scale{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-top:7px}
+  .message{font-size:14px;color:#64748b;margin-top:15px;line-height:1.5}
+  .error{color:#dc2626;font-size:13px;margin-top:8px;display:none}
+  .footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:18px}
+  @media(max-width:430px){.card{padding:22px}h1{font-size:28px}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>BMI Calculator</h1>
+  <p class="sub">Calculate your Body Mass Index instantly.</p>
+
+  <div class="tabs">
+    <button class="tab active" id="metricTab" onclick="setUnit('metric')">Metric</button>
+    <button class="tab" id="imperialTab" onclick="setUnit('imperial')">Imperial</button>
+  </div>
+
+  <div id="metricFields">
+    <label for="heightCm">Height</label>
+    <input id="heightCm" type="number" min="50" max="300" step="0.1" placeholder="e.g. 170">
+    <div class="unit">centimetres (cm)</div>
+
+    <label for="weightKg">Weight</label>
+    <input id="weightKg" type="number" min="2" max="500" step="0.1" placeholder="e.g. 70">
+    <div class="unit">kilograms (kg)</div>
+  </div>
+
+  <div id="imperialFields" style="display:none">
+    <div class="row">
+      <div>
+        <label for="feet">Height</label>
+        <input id="feet" type="number" min="1" max="9" placeholder="Feet">
+      </div>
+      <div>
+        <label for="inches">Height</label>
+        <input id="inches" type="number" min="0" max="11.9" step="0.1" placeholder="Inches">
+      </div>
+    </div>
+    <div class="unit">height in feet + inches</div>
+    <label for="weightLb">Weight</label>
+    <input id="weightLb" type="number" min="5" max="1100" step="0.1" placeholder="e.g. 154">
+    <div class="unit">pounds (lb)</div>
+  </div>
+
+  <div class="error" id="error">Please enter valid height and weight.</div>
+  <button class="calculate" onclick="calculateBMI()">Calculate BMI</button>
+
+  <div class="result" id="result">
+    <div>Your BMI</div>
+    <div class="bmi" id="bmiValue">--</div>
+    <div class="status" id="status">--</div>
+    <div class="bar"><div class="marker" id="marker"></div></div>
+    <div class="scale"><span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span></div>
+    <p class="message" id="message"></p>
+  </div>
+
+  <div class="footer">BMI is a screening measure, not a medical diagnosis.</div>
+</div>
+
+<script>
+let unit = "metric";
+
+function setUnit(value){
+  unit=value;
+  document.getElementById("metricFields").style.display=value==="metric"?"block":"none";
+  document.getElementById("imperialFields").style.display=value==="imperial"?"block":"none";
+  document.getElementById("metricTab").classList.toggle("active",value==="metric");
+  document.getElementById("imperialTab").classList.toggle("active",value==="imperial");
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("error").style.display="none";
+}
+
+function calculateBMI(){
+  let height, weight;
+  if(unit==="metric"){
+    height=parseFloat(document.getElementById("heightCm").value)/100;
+    weight=parseFloat(document.getElementById("weightKg").value);
+  }else{
+    const feet=parseFloat(document.getElementById("feet").value);
+    const inches=parseFloat(document.getElementById("inches").value)||0;
+    height=((feet*12)+inches)*0.0254;
+    weight=parseFloat(document.getElementById("weightLb").value)*0.45359237;
+  }
+
+  const error=document.getElementById("error");
+  if(!height || !weight || height<=0 || weight<=0){
+    error.style.display="block";
+    document.getElementById("result").classList.remove("show");
+    return;
+  }
+  error.style.display="none";
+
+  const bmi=weight/(height*height);
+  document.getElementById("bmiValue").textContent=bmi.toFixed(1);
+
+  let status,message;
+  if(bmi<18.5){
+    status="Underweight";
+    message="Your BMI is below the standard healthy-weight range.";
+  }else if(bmi<25){
+    status="Normal weight";
+    message="Your BMI falls within the standard healthy-weight range.";
+  }else if(bmi<30){
+    status="Overweight";
+    message="Your BMI is above the standard healthy-weight range.";
+  }else{
+    status="Obesity";
+    message="Your BMI is in the obesity range by standard adult BMI categories.";
+  }
+
+  document.getElementById("status").textContent=status;
+  document.getElementById("message").textContent=message;
+
+  // Position marker over a 15–40 display scale.
+  const position=Math.max(0,Math.min(100,((bmi-15)/(40-15))*100));
+  document.getElementById("marker").style.left=position+"%";
+
+  document.getElementById("result").classList.add("show");
+}
+</script>
+</body>
+</html>
